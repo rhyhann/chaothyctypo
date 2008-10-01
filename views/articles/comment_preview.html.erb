@@ -1,0 +1,15 @@
+<div class="comments comment preview">
+  <ol class="commentlist">
+    <li class="alt">
+      <%= content_tag(:div, gravatar_tag(@comment.email))
+        if this_blog.use_gravatar and @comment.email %> 
+        <%= @comment.html %>
+      <p class="commentmetadata">
+        <cite>
+          <%= (@comment.url.blank?) ? h(@comment.author) : 
+            link_to(h(@comment.author), @comment.url) %>
+        </cite>
+      </p>
+    </li>
+  </ol>
+</div>

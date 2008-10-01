@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title><%=h page_title %></title>
+  <%= page_header %>
+  <%= stylesheet_link_tag '/stylesheets/theme/application.css', :media => 'all' %>
+  <!--[if IE]><%= stylesheet_link_tag '/stylesheets/theme/application.css', :media => 'all' %><![endif]-->
+</head>
+
+<body>
+<div id="page">
+	<div id="header">
+	  <h1><%= link_to this_blog.blog_name, this_blog.base_url %></h1>
+    <div class="description"><%= this_blog.blog_subtitle %></div>
+  </div>
+  <div class="hr">&nbsp;</div>
+  <div id="headerimg" class="clearfix">
+    <div id="header-overlay"> </div>
+    <div id="header-image"><%= image_tag 'theme/headerimage.jpg' -%></div>
+  </div>
+  <div class="hr">&nbsp;</div>
+  <div id="wrapper" class="clearfix">
+    <div id="content" class="<%=
+      controller.action_name == 'show' ? 'widecolumn' : 'narrowcolumn'
+    -%>">
+        <div id="loading" class="loading" style="display:none;"><%=_("Searching")%>...</div>
+        <div id="results" class="results"></div>
+ 
+        <% @featured = Page.find_by_name("related")%>
+        <% if @featured -%>
+        <div id="featured">
+          <div><%= @featured.html(:body).gsub(/<\/?[^>]*>/, "").slice(0..250)%>...</div>
+          <span class="ftd_btm">
+          <%= link_to_permalink(@featured, _("Read More")) %>
+          </span>
+        </div>
+        <% end %>
+      <%= @content_for_layout %>
+      <%= javascript_tag 'show_dates_as_local_time()' %>
+    </div>
+    <div id="sidebar">
+      <%= render :partial => 'shared/search' -%>
+      <%= render_sidebars %>
+    </div>
+  </div>
+  <div class="hr">&nbsp;</div>
+  <div id="footer">
+    <p>
+      <a href="http://avalonstar.com">Original Template</a> by Revyver &bull; 
+      <a href="http://github.com/revyver/chaoticsoul">ChaoticSoul</a> theme by
+      <a href="http://www.revyver.com">Revyver</a> &bull;
+      Typo port by <a href="http://rhyhann.net">Rhyhann</a></p>
+  </div>
+</div>
+</body>
+</html>

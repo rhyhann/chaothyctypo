@@ -1,0 +1,13 @@
+<% @articles.each_with_index do |a,n| %>
+  <% unless controller.action_name == 'show' %>
+    <% sclass = n == 0 ? ['top', 'first'] : ['lastfive', ''] %>
+  <% end %>
+  <%= render :partial => 'articles/article', :object => a, :locals => {:sclass => sclass} %>
+<% end -%>
+<% unless @pages.item_count <= this_blog.limit_article_display -%>
+<p class="pagination">Older posts: <%= pagination_links @pages, :params => { :action => @controller.action_name } %></p>
+<div class="navigation">
+  <%= pagination_links @pages, :params => { :action => @controller.action_name } %>
+  <div class="clear"></div>
+</div>
+<% end -%>

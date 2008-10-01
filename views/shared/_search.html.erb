@@ -1,0 +1,14 @@
+<% form_tag({ :controller => 'articles', :action => 'search' },
+            { :method => 'get', :id => 'searchform' }) do -%>
+  <div>
+    <input type="text" id="q" name="q" class="keyword" value="" />
+  </div>
+<% end -%>
+  <%= observe_field 'q',
+                    :url        => { :controller => 'live', :action => 'search' },
+                    :frequency  => 1,
+                    :loading    => "Element.show('loading')",
+                    :complete   => "Element.hide('loading')",
+                    :update     => 'results',
+                    :with       => "'q=' + encodeURIComponent($F('q'))" %>
+

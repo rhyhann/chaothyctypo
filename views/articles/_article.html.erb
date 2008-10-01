@@ -1,0 +1,28 @@
+<div class="post <%= sclass[0] if sclass[0] %>" id="article-<%= article.id %>">
+  <h2 class="<%=sclass[1] if sclass[1] != ''%>"><%= (controller.action_name.include? 'permalink') ? article.title : link_to_permalink(article,article.title) %></h2>
+  <span class="metadata">
+    <%= category_links(article) unless article.categories.empty? -%> &bull;
+    <%= comments_link(article)  if article.allow_comments? %>
+  </span>
+
+  <div class="entrytext">
+    <%= article.html(:body) %>
+
+    <% if article.extended? -%>
+      <div class="extended">
+        <% if controller.action_name == 'index' -%>
+          <p><%= link_to_permalink article,"Continue reading &raquo;" %></p>
+        <% else -%>
+          <%= article.html(:extended) %>
+        <% end -%>
+      </div>
+    <% end -%>
+    <% unless controller.action_name == 'index' -%>
+      <p class="authormeta">
+        <%= author_link(article) %> &bull;
+        <%= article.published_at.strftime("%d %b %Y %H:%M") %> &bull;
+        <%= tag_links(article) unless article.tags.empty? %>
+      </p>
+    <% end -%>
+  </div>
+</div>
